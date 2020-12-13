@@ -1,0 +1,32 @@
+
+  <div  infiniteScroll [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">email</th>
+        <th scope="col">Degree</th>
+        <th scope="col">image</th>
+      </tr>
+    </thead>
+
+
+    <tbody >
+    <tr *ngFor="let user of userList">
+        <th scope="col">{{user.firstname }}</th>
+        <th scope="col">{{user.lastname }}</th>
+        <th scope="col">{{user.email }}</th>
+        <th scope="col"><ul *ngFor="let degree of user.degrees">
+            <li>{{degree}}</li>
+        </ul> </th>
+        <th scope="col"><img src={{user.image}}/></th>
+      </tr>
+  </tbody>
+
+  </table>
+
+
+</div>
