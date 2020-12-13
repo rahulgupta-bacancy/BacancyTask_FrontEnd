@@ -1,32 +1,47 @@
+<div class="container">
+    <div class="row mt-4"> 
+        <div class="col-md-6">
 
-  <div  infiniteScroll [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="50"
-  (scrolled)="onScroll()">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">FirstName</th>
-        <th scope="col">LastName</th>
-        <th scope="col">email</th>
-        <th scope="col">Degree</th>
-        <th scope="col">image</th>
-      </tr>
-    </thead>
+            <input [(ngModel)]="searchText" placeholder="search by Email " class="form-control">
+        </div>
+        <div class="col-md-6">
+            
+    <button type="button" class="btn btn-primary float-right" (click)="logout()">Logout</button>
+        </div>
 
-
-    <tbody >
-    <tr *ngFor="let user of userList">
-        <th scope="col">{{user.firstname }}</th>
-        <th scope="col">{{user.lastname }}</th>
-        <th scope="col">{{user.email }}</th>
-        <th scope="col"><ul *ngFor="let degree of user.degrees">
-            <li>{{degree}}</li>
-        </ul> </th>
-        <th scope="col"><img src={{user.image}}/></th>
-      </tr>
-  </tbody>
-
-  </table>
+</div>
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+    <table class="table table-striped mt-5">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Degree</th>
+                <th scope="col">Image</th>
+            </tr>
+        </thead>
 
 
+        <tbody>
+            <tr *ngFor="let user of userList | filter : searchText ;let i = index">
+                <th scope="col">{{i +  1}}</th>
+                <th scope="col">{{user.firstname }}</th>
+                <th scope="col">{{user.lastname }}</th>
+                <th scope="col">{{user.email }}</th>
+                <th scope="col">
+                    <ul *ngFor="let degree of user.degrees">
+                        <li>{{degree}}</li>
+                    </ul>
+                </th>
+                <th scope="col"><img src={{user.image}} /></th>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+</div>
 </div>

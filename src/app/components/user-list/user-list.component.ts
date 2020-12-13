@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/utils/service/users.service';
 
 @Component({
@@ -9,27 +10,41 @@ import { UsersService } from 'src/app/utils/service/users.service';
 export class UserListComponent implements OnInit {
 
   userList;
+  loading = false;
+  searchText;
   constructor(
-    private userService:UsersService) { }
+    private route: Router,
+    private userService: UsersService) { }
 
   ngOnInit(): void {
     this.getAllUsers();
   }
 
-
-  getAllUsers(){
+//get initial users 
+  getAllUsers() {
+    this.loading = true;
     this.userService.userList().subscribe(
-      data=>{
-        this.userList= data;
+      data => {
+
+        this.loading = false;
+        this.userList = data;
       }
     )
   }
-  onScroll(){
-    console.log("scroll")
+
+  //for infinite scrolling 
+  onScroll() {
+    //pass the number of data we want to skip in param    
     this.userService.userList(this.userList.length).subscribe(
-      data=>{
-     this.userList=   this.userList.concat(data);
+      data => {
+        this.userList = this.userList.concat(data);
       }
     )
+  }
+
+  //remove the token from localstorage and navigate to login route
+  logout() {
+    localStorage.removeItem('token');
+    this.route.navigate(['login'])
   }
 }

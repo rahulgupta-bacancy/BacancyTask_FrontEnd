@@ -6,15 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationGuard implements CanActivate {
+
+  constructor(private router: Router) {}
   canActivate(
-    route: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,    
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 let token =localStorage.getItem('token');
-      if(token != '')
+      if(token != '' && token != undefined)
     return true;
 
     else
+    this.router.navigate(['login']);
     return false;
+    
   }
   
 }
